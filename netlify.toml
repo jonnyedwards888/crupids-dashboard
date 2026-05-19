@@ -1,0 +1,11 @@
+# Netlify picks this file from the repo root (this folder).
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Vite emits dashboard.html — map site root there so "/" works without renaming the file.
+[[redirects]]
+  from = "/"
+  to = "/dashboard.html"
+  status = 200
