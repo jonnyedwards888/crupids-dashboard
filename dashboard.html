@@ -98,6 +98,22 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     user-select: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+  }
+  .dash-title:hover {
+    background: linear-gradient(180deg, #FFFFFF 0%, #C7C4BC 120%), rgba(255,255,255,0.05);
+    -webkit-background-clip: text, border-box;
+    background-clip: text, border-box;
+  }
+  .dash-title[contenteditable="true"] {
+    outline: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.08);
+    -webkit-text-fill-color: #FAFAFA;
+    user-select: text;
   }
 
   @media (max-width: 480px) {
@@ -851,15 +867,317 @@
   .goal-item[draggable="true"]:active { cursor: grabbing; }
   .goal-item.dragging { opacity: 0.4; }
 
+  /* ── Profile Picture ── */
+  .profile-section {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10;
+  }
+  .profile-pic-wrap {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .profile-pic-wrap:hover {
+    border-color: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+  }
+  .profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .profile-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--text-tertiary);
+  }
+  .profile-upload-input {
+    display: none;
+  }
+  .settings-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-secondary);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .settings-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .modal {
+    background: rgba(15,15,16,0.98);
+    border-radius: 20px;
+    padding: 28px 32px;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .modal-close:hover {
+    background: rgba(255,255,255,0.08);
+    color: var(--text-primary);
+  }
+  .modal-section {
+    margin-bottom: 20px;
+  }
+  .modal-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin-bottom: 10px;
+  }
+  .modal-input-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .modal-label {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .modal-input {
+    width: 80px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .modal-input:focus {
+    border-color: rgba(255,255,255,0.3);
+  }
+  .modal-save-btn {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #E8E5DD 100%);
+    color: #0A0A0B;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .modal-save-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+  .modal-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  .modal-stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .modal-stat-value {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* ── Priority Indicators ── */
+  .goal-priority {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: box-shadow 0.2s;
+  }
+  .goal-priority[data-priority="high"] {
+    background: #FF6B6B;
+    box-shadow: 0 0 8px rgba(255,107,107,0.5);
+  }
+  .goal-priority[data-priority="medium"] {
+    background: #F2C063;
+    box-shadow: 0 0 8px rgba(242,192,99,0.5);
+  }
+  .goal-priority[data-priority="low"] {
+    background: #6BE3A4;
+    box-shadow: 0 0 8px rgba(107,227,164,0.5);
+  }
+  .goal-priority[data-priority="none"] {
+    background: rgba(255,255,255,0.15);
+    box-shadow: none;
+  }
+  .priority-selector {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    background: rgba(20,20,22,0.98);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    z-index: 100;
+  }
+  .priority-option {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .priority-option:hover {
+    transform: scale(1.1);
+  }
+  .priority-option.selected {
+    border-color: rgba(255,255,255,0.4);
+  }
+  .priority-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .priority-dot[data-p="high"] { background: #FF6B6B; }
+  .priority-dot[data-p="medium"] { background: #F2C063; }
+  .priority-dot[data-p="low"] { background: #6BE3A4; }
+  .priority-dot[data-p="none"] { background: rgba(255,255,255,0.15); }
+
+  /* ── Start Day Button ── */
+  .ring-container {
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .ring-container:hover {
+    transform: scale(1.02);
+  }
+  .ring-start-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .ring-container:hover .ring-start-overlay {
+    opacity: 1;
+  }
+  .ring-start-btn {
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.95);
+    color: #0A0A0B;
+    font-size: 12px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    pointer-events: auto;
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .ring-start-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.05);
+  }
+
+  /* ── Cross-list drag indicator ── */
+  .drag-over-card {
+    outline: 2px dashed rgba(242,192,99,0.6);
+    outline-offset: 4px;
+    background: rgba(242,192,99,0.08) !important;
+  }
+
   /* ── Utilities ── */
   .hidden { display: none !important; }
 </style>
 </head>
 <body>
+<!-- Profile Section -->
+<div class="profile-section">
+  <button class="settings-btn" id="settingsBtn" title="Settings">⚙️</button>
+  <div class="profile-pic-wrap" id="profilePicWrap" title="Click to upload photo">
+    <img class="profile-pic hidden" id="profilePic" alt="Profile" />
+    <div class="profile-placeholder" id="profilePlaceholder">👤</div>
+  </div>
+  <input type="file" class="profile-upload-input" id="profileUpload" accept="image/*" />
+</div>
+
 <div class="dashboard-wrap">
 
   <!-- Component 1: Title -->
-  <h1 class="dash-title">My Dashboard</h1>
+  <h1 class="dash-title" id="dashTitle">My Dashboard</h1>
 
   <!-- Component 2: Goal Ticker -->
   <div class="ticker-row">
@@ -878,7 +1196,7 @@
 
   <!-- Component 3: Day Ring -->
   <div class="day-ring-wrap card" id="dayRingWrap">
-    <div class="ring-container">
+    <div class="ring-container" id="ringContainer">
       <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="ringGlow" x="-20%" y="-20%" width="140%" height="140%">
@@ -904,14 +1222,17 @@
       </svg>
       <div class="ring-text-overlay">
         <div class="ring-percent" id="ringPercent">—</div>
-        <div class="ring-phase"  id="ringPhase">SLEEPING</div>
+        <div class="ring-phase"  id="ringPhase">READY</div>
         <div class="ring-clock"  id="ringClock">—</div>
+      </div>
+      <div class="ring-start-overlay" id="ringStartOverlay">
+        <button class="ring-start-btn" id="ringStartBtn">Start Day</button>
       </div>
     </div>
     <div class="ring-info">
-      <div class="ring-status"      id="ringStatus">😴 Still sleeping</div>
+      <div class="ring-status"      id="ringStatus">Click circle to start your day</div>
       <div class="ring-remaining"   id="ringRemaining">—</div>
-      <div class="ring-hours-range">8:00 AM – 12:00 AM</div>
+      <div class="ring-hours-range" id="ringHoursRange">8:00 AM – 12:00 AM</div>
     </div>
   </div>
 
@@ -970,10 +1291,54 @@
   </div><!-- /section -->
 </div><!-- /dashboard-wrap -->
 
+<!-- Settings Modal -->
+<div class="modal-overlay hidden" id="settingsModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Settings & Stats</div>
+      <button class="modal-close" id="modalClose">×</button>
+    </div>
+    
+    <div class="modal-section">
+      <div class="modal-section-title">Wake & Sleep Times</div>
+      <div class="modal-input-group">
+        <label class="modal-label" for="wakeInput">Wake time (hour, 0-23)</label>
+        <input type="number" class="modal-input" id="wakeInput" min="0" max="23" value="8" />
+      </div>
+      <div class="modal-input-group">
+        <label class="modal-label" for="sleepInput">Sleep time (hour, 0-23)</label>
+        <input type="number" class="modal-input" id="sleepInput" min="0" max="23" value="24" />
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Statistics</div>
+      <div class="modal-stat">
+        <span class="modal-stat-label">Total tasks completed</span>
+        <span class="modal-stat-value" id="statTotalCompleted">0</span>
+      </div>
+      <div class="modal-stat">
+        <span class="modal-stat-label">Current streak</span>
+        <span class="modal-stat-value" id="statStreak">0 days</span>
+      </div>
+      <div class="modal-stat">
+        <span class="modal-stat-label">Days tracked</span>
+        <span class="modal-stat-value" id="statDaysTracked">0</span>
+      </div>
+      <div class="modal-stat">
+        <span class="modal-stat-label">Best streak</span>
+        <span class="modal-stat-value" id="statBestStreak">0 days</span>
+      </div>
+    </div>
+
+    <button class="modal-save-btn" id="modalSave">Save Settings</button>
+  </div>
+</div>
+
 <script>
 // ── Constants ──
-const WAKE_HOUR  = 8;
-const SLEEP_HOUR = 24;
+let WAKE_HOUR  = 8;
+let SLEEP_HOUR = 24;
 const ANTHROPIC_API_KEY = '';
 
 // ── Storage helpers ──
@@ -995,6 +1360,181 @@ function storeListKeys(prefix) {
   }
   return keys;
 }
+
+// ── Load settings ──
+function loadSettings() {
+  const settings = storeGet('dashboard_settings') || {};
+  WAKE_HOUR = settings.wakeHour !== undefined ? settings.wakeHour : 8;
+  SLEEP_HOUR = settings.sleepHour !== undefined ? settings.sleepHour : 24;
+  updateRingHoursDisplay();
+}
+function saveSettings() {
+  storeSet('dashboard_settings', { wakeHour: WAKE_HOUR, sleepHour: SLEEP_HOUR });
+}
+function updateRingHoursDisplay() {
+  const wakeDisplay = WAKE_HOUR === 0 ? '12:00 AM' : WAKE_HOUR < 12 ? `${WAKE_HOUR}:00 AM` : WAKE_HOUR === 12 ? '12:00 PM' : `${WAKE_HOUR-12}:00 PM`;
+  const sleepDisplay = SLEEP_HOUR === 0 ? '12:00 AM' : SLEEP_HOUR < 12 ? `${SLEEP_HOUR}:00 AM` : SLEEP_HOUR === 12 ? '12:00 PM' : SLEEP_HOUR === 24 ? '12:00 AM' : `${SLEEP_HOUR-12}:00 PM`;
+  document.getElementById('ringHoursRange').textContent = `${wakeDisplay} – ${sleepDisplay}`;
+}
+
+// ── Dashboard Title ──
+(function() {
+  const title = document.getElementById('dashTitle');
+  const savedTitle = storeGet('dashboard_title');
+  if (savedTitle) title.textContent = savedTitle;
+  
+  title.addEventListener('click', () => {
+    if (title.getAttribute('contenteditable') === 'true') return;
+    const original = title.textContent;
+    title.contentEditable = 'true';
+    title.focus();
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.selectNodeContents(title);
+    range.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    
+    const commit = () => {
+      const newText = title.textContent.trim() || 'My Dashboard';
+      title.contentEditable = 'false';
+      title.textContent = newText;
+      storeSet('dashboard_title', newText);
+    };
+    const cancel = () => {
+      title.contentEditable = 'false';
+      title.textContent = original;
+    };
+    title.addEventListener('blur', commit, { once: true });
+    title.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); commit(); }
+      if (e.key === 'Escape') { e.preventDefault(); cancel(); }
+    });
+  });
+})();
+
+// ── Profile Picture ──
+(function() {
+  const wrap = document.getElementById('profilePicWrap');
+  const img = document.getElementById('profilePic');
+  const placeholder = document.getElementById('profilePlaceholder');
+  const upload = document.getElementById('profileUpload');
+  
+  const savedPic = storeGet('profile_picture');
+  if (savedPic) {
+    img.src = savedPic;
+    img.classList.remove('hidden');
+    placeholder.classList.add('hidden');
+  }
+  
+  wrap.addEventListener('click', () => upload.click());
+  
+  upload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const dataUrl = evt.target.result;
+      img.src = dataUrl;
+      img.classList.remove('hidden');
+      placeholder.classList.add('hidden');
+      storeSet('profile_picture', dataUrl);
+    };
+    reader.readAsDataURL(file);
+  });
+})();
+
+// ── Settings Modal ──
+(function() {
+  const modal = document.getElementById('settingsModal');
+  const settingsBtn = document.getElementById('settingsBtn');
+  const closeBtn = document.getElementById('modalClose');
+  const saveBtn = document.getElementById('modalSave');
+  const wakeInput = document.getElementById('wakeInput');
+  const sleepInput = document.getElementById('sleepInput');
+  
+  function openModal() {
+    wakeInput.value = WAKE_HOUR;
+    sleepInput.value = SLEEP_HOUR === 24 ? 0 : SLEEP_HOUR;
+    updateStats();
+    modal.classList.remove('hidden');
+  }
+  
+  function closeModal() {
+    modal.classList.add('hidden');
+  }
+  
+  function updateStats() {
+    const allGoalKeys = storeListKeys('goals:');
+    let totalCompleted = 0;
+    let daysTracked = 0;
+    
+    allGoalKeys.forEach(k => {
+      const goals = storeGet(k) || [];
+      if (goals.length > 0) daysTracked++;
+      totalCompleted += goals.filter(g => g.done).length;
+    });
+    
+    const streak = storeGet('goal_streak_v1') || { count: 0 };
+    const bestStreak = storeGet('best_streak') || 0;
+    
+    document.getElementById('statTotalCompleted').textContent = totalCompleted;
+    document.getElementById('statStreak').textContent = `${streak.count} days`;
+    document.getElementById('statDaysTracked').textContent = daysTracked;
+    document.getElementById('statBestStreak').textContent = `${bestStreak} days`;
+  }
+  
+  settingsBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+  
+  saveBtn.addEventListener('click', () => {
+    const newWake = parseInt(wakeInput.value);
+    const newSleep = parseInt(sleepInput.value);
+    if (isNaN(newWake) || newWake < 0 || newWake > 23 ||
+        isNaN(newSleep) || newSleep < 0 || newSleep > 23) {
+      alert('Please enter valid hours (0-23)');
+      return;
+    }
+    WAKE_HOUR = newWake;
+    SLEEP_HOUR = newSleep === 0 ? 24 : newSleep;
+    saveSettings();
+    updateRingHoursDisplay();
+    closeModal();
+    if (dayStarted) updateRing();
+  });
+})();
+
+// ── Day Start ──
+let dayStarted = false;
+let dayStartTime = null;
+
+function loadDayState() {
+  const state = storeGet('day_state_' + getActiveDateString());
+  if (state && state.started) {
+    dayStarted = true;
+    dayStartTime = state.startTime;
+  }
+}
+
+function startDay() {
+  dayStarted = true;
+  dayStartTime = Date.now();
+  storeSet('day_state_' + getActiveDateString(), { started: true, startTime: dayStartTime });
+  document.getElementById('ringStartOverlay').style.display = 'none';
+  updateRing();
+}
+
+document.getElementById('ringStartBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  startDay();
+});
+
+document.getElementById('ringContainer').addEventListener('click', () => {
+  if (!dayStarted) startDay();
+});
 
 // ── Date helpers ──
 function getActiveDateString() {
@@ -1060,6 +1600,11 @@ function runStreakCheck() {
     streak.lastProcessedDate = k.replace('goals:','');
   });
   storeSet('goal_streak_v1', streak);
+  
+  const bestStreak = storeGet('best_streak') || 0;
+  if (streak.count > bestStreak) {
+    storeSet('best_streak', streak.count);
+  }
 }
 
 function renderStreak() {
@@ -1126,6 +1671,17 @@ function buildGoalRow(g, idx, goals, key, readOnly) {
   handle.title = 'Drag to reorder';
   li.appendChild(handle);
 
+  // Priority indicator
+  const priorityWrap = document.createElement('div');
+  priorityWrap.style.position = 'relative';
+  const priority = document.createElement('span');
+  priority.className = 'goal-priority';
+  priority.dataset.priority = g.priority || 'none';
+  priority.title = 'Click to change priority';
+  priority.style.cursor = 'pointer';
+  priorityWrap.appendChild(priority);
+  li.appendChild(priorityWrap);
+
   // Checkbox wrap
   const cbWrap = document.createElement('label');
   cbWrap.className = 'goal-checkbox-wrap';
@@ -1161,6 +1717,53 @@ function buildGoalRow(g, idx, goals, key, readOnly) {
   delBtn.title = 'Delete goal';
   li.appendChild(delBtn);
 
+  // ── Priority selector ──
+  if (!readOnly) {
+    let selectorEl = null;
+    priority.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (selectorEl) {
+        selectorEl.remove();
+        selectorEl = null;
+        return;
+      }
+      selectorEl = document.createElement('div');
+      selectorEl.className = 'priority-selector';
+      const priorities = [
+        { val: 'high', label: 'High' },
+        { val: 'medium', label: 'Medium' },
+        { val: 'low', label: 'Low' },
+        { val: 'none', label: 'None' }
+      ];
+      priorities.forEach(p => {
+        const opt = document.createElement('div');
+        opt.className = 'priority-option' + (g.priority === p.val || (!g.priority && p.val === 'none') ? ' selected' : '');
+        opt.title = p.label;
+        const dot = document.createElement('span');
+        dot.className = 'priority-dot';
+        dot.dataset.p = p.val;
+        opt.appendChild(dot);
+        opt.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          const data = storeGet(key) || [];
+          data[idx].priority = p.val === 'none' ? undefined : p.val;
+          storeSet(key, data);
+          selectorEl.remove();
+          selectorEl = null;
+          const rld = key === 'goals:' + getActiveDateString() ? loadToday : loadTomorrow;
+          rld();
+        });
+        selectorEl.appendChild(opt);
+      });
+      priorityWrap.appendChild(selectorEl);
+      document.addEventListener('click', function closeSel() {
+        if (selectorEl) selectorEl.remove();
+        selectorEl = null;
+        document.removeEventListener('click', closeSel);
+      }, { once: true });
+    });
+  }
+
   // ── Checkbox change ──
   cb.addEventListener('change', () => {
     const data = storeGet(key) || [];
@@ -1195,7 +1798,10 @@ function buildGoalRow(g, idx, goals, key, readOnly) {
   });
 
   // ── Drag/drop ──
-  if (!readOnly) wireDragReorder(li, idx, key, reload);
+  if (!readOnly) {
+    wireDragReorder(li, idx, key, reload);
+    wireCrossListDrag(li, idx, key);
+  }
 
   return li;
 }
@@ -1254,11 +1860,15 @@ function wireDragReorder(li, idx, key, reloadFn) {
     li.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', idx);
+    e.dataTransfer.setData('source-key', key);
   });
   li.addEventListener('dragend', () => {
     li.classList.remove('dragging');
     document.querySelectorAll('.goal-item').forEach(el => {
       el.classList.remove('drag-over-top','drag-over-bottom');
+    });
+    document.querySelectorAll('.gm-card').forEach(el => {
+      el.classList.remove('drag-over-card');
     });
   });
   li.addEventListener('dragover', (e) => {
@@ -1277,8 +1887,12 @@ function wireDragReorder(li, idx, key, reloadFn) {
     e.preventDefault();
     li.classList.remove('drag-over-top','drag-over-bottom');
     const fromIdx = parseInt(e.dataTransfer.getData('text/plain'));
+    const sourceKey = e.dataTransfer.getData('source-key');
     const toIdx = parseInt(li.dataset.idx);
+    
+    if (sourceKey !== key) return;
     if (fromIdx === toIdx) return;
+    
     const data = storeGet(key) || [];
     const [item] = data.splice(fromIdx, 1);
     const rect = li.getBoundingClientRect();
@@ -1288,6 +1902,53 @@ function wireDragReorder(li, idx, key, reloadFn) {
     data.splice(Math.max(0, adjustedIdx), 0, item);
     storeSet(key, data);
     reloadFn(key);
+  });
+}
+
+// ── Cross-list drag (today -> tomorrow) ──
+function wireCrossListDrag(li, idx, key) {
+  const todayKey = 'goals:' + getActiveDateString();
+  const tomorrowKey = 'goals:' + getTomorrowDateString();
+  const tomorrowCard = document.getElementById('tomorrowCard');
+  const tomorrowList = document.getElementById('tomorrowList');
+  
+  if (key !== todayKey) return;
+  
+  tomorrowCard.addEventListener('dragover', (e) => {
+    const sourceKey = e.dataTransfer.getData('source-key');
+    if (sourceKey === todayKey) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      tomorrowCard.classList.add('drag-over-card');
+    }
+  });
+  
+  tomorrowCard.addEventListener('dragleave', (e) => {
+    if (!tomorrowCard.contains(e.relatedTarget)) {
+      tomorrowCard.classList.remove('drag-over-card');
+    }
+  });
+  
+  tomorrowCard.addEventListener('drop', (e) => {
+    const sourceKey = e.dataTransfer.getData('source-key');
+    if (sourceKey !== todayKey) return;
+    
+    e.preventDefault();
+    tomorrowCard.classList.remove('drag-over-card');
+    
+    const fromIdx = parseInt(e.dataTransfer.getData('text/plain'));
+    const todayGoals = storeGet(todayKey) || [];
+    const tomorrowGoals = storeGet(tomorrowKey) || [];
+    
+    const [item] = todayGoals.splice(fromIdx, 1);
+    item.done = false;
+    delete item.doneAt;
+    tomorrowGoals.push(item);
+    
+    storeSet(todayKey, todayGoals);
+    storeSet(tomorrowKey, tomorrowGoals);
+    loadToday();
+    loadTomorrow();
   });
 }
 
@@ -1560,6 +2221,7 @@ document.getElementById('gmPushBtn').addEventListener('click', () => {
   const ringClock   = document.getElementById('ringClock');
   const ringStatus  = document.getElementById('ringStatus');
   const ringRemaining = document.getElementById('ringRemaining');
+  const startOverlay = document.getElementById('ringStartOverlay');
 
   const palette = [
     [255,216,158],  // 0%
@@ -1600,14 +2262,26 @@ document.getElementById('gmPushBtn').addEventListener('click', () => {
     return `${h}:${m} ${ampm}`;
   }
 
-  function update() {
+  function updateRing() {
+    if (!dayStarted) {
+      ringFill.setAttribute('stroke-dashoffset', C);
+      ringFill.setAttribute('stroke', '#4D4B47');
+      ringPercent.textContent = '—';
+      ringPhase.textContent   = 'READY';
+      ringStatus.textContent  = 'Click circle to start your day';
+      ringRemaining.textContent = '—';
+      startOverlay.style.display = '';
+      return;
+    }
+    
+    startOverlay.style.display = 'none';
+    
     const now   = new Date();
     const hours = now.getHours() + now.getMinutes()/60 + now.getSeconds()/3600;
 
     ringClock.textContent = fmtClock(now);
 
     if (hours < WAKE_HOUR) {
-      // Before 8 AM
       ringFill.setAttribute('stroke-dashoffset', C);
       ringFill.setAttribute('stroke', '#4D4B47');
       ringPercent.textContent = '—';
@@ -1616,7 +2290,6 @@ document.getElementById('gmPushBtn').addEventListener('click', () => {
       const untilWake = WAKE_HOUR - hours;
       ringRemaining.textContent = fmtHM(untilWake) + ' until wake-up';
     } else if (hours < SLEEP_HOUR) {
-      // Awake window
       const pct = (hours - WAKE_HOUR) / (SLEEP_HOUR - WAKE_HOUR) * 100;
       const offset = C * (1 - pct/100);
       ringFill.setAttribute('stroke-dashoffset', offset);
@@ -1641,7 +2314,6 @@ document.getElementById('gmPushBtn').addEventListener('click', () => {
       ringPhase.textContent  = phase;
       ringStatus.textContent = status;
     } else {
-      // Past midnight
       ringFill.setAttribute('stroke-dashoffset', 0);
       ringFill.setAttribute('stroke', '#E25D7A');
       ringPercent.textContent = '100%';
@@ -1650,10 +2322,12 @@ document.getElementById('gmPushBtn').addEventListener('click', () => {
       ringRemaining.textContent = 'Sleep!';
     }
   }
+  
+  window.updateRing = updateRing;
 
   ringFill.style.strokeDasharray = C;
-  update();
-  setInterval(update, 60 * 1000);
+  updateRing();
+  setInterval(updateRing, 60 * 1000);
 })();
 
 // ── Wire add handlers ──
@@ -1671,6 +2345,8 @@ makeAddHandlers(
 );
 
 // ── Init ──
+loadSettings();
+loadDayState();
 runRollover();
 runStreakCheck();
 renderStreak();
