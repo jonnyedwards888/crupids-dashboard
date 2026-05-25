@@ -11,10 +11,13 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: resolve(__dirname, "dashboard.html"),
+      input: {
+        main: resolve(__dirname, "index.html"),
+        dashboard: resolve(__dirname, "dashboard.html"),
+      },
     },
   },
   server: {
-    open: "/dashboard.html",
+    open: "/",
   },
 });

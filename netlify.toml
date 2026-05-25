@@ -4,8 +4,8 @@
   command = "npm run build"
   publish = "dist"
 
-# Vite emits dashboard.html — map site root there so "/" works without renaming the file.
+# index.html redirects to dashboard; keep SPA-style fallback for direct /dashboard.html visits.
 [[redirects]]
-  from = "/"
+  from = "/dashboard"
   to = "/dashboard.html"
-  status = 200
+  status = 301
